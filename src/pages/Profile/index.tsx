@@ -95,14 +95,12 @@ const Profile: React.FC = () => {
           const { data } = await api.put('/acs', formData);
           updateAcs(data);
 
-          console.log(JSON.parse(data));
-
           Alert.alert(
             'Alteração realizada com sucesso.',
             'Seus dados estão atualizados.',
           );
         } catch (err) {
-          Alert.alert('Alteração de dados falhou', err.message);
+          Alert.alert('Alteração de dados falhou.', 'Tente novamente.');
         }
 
         navigation.goBack();
