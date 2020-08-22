@@ -66,7 +66,6 @@ const Profile: React.FC = () => {
             .oneOf([Yup.ref('newPassword')], 'Senhas diferentes'),
         });
 
-        console.log(data);
         await schema.validate(data, {
           abortEarly: false,
         });
@@ -111,7 +110,7 @@ const Profile: React.FC = () => {
 
         Alert.alert(
           'Erro na alteração de dados',
-          'Ocorreu um erro ao tentar criar a conta',
+          'Ocorreu um erro ao validar os campos',
         );
       }
     },
@@ -160,6 +159,7 @@ const Profile: React.FC = () => {
                 icon="user"
                 placeholder="Nome"
                 defaultValue={acs.name}
+                blurOnSubmit={true}
                 onSubmitEditing={() => {
                   emailInputRef.current?.focus();
                 }}
@@ -173,6 +173,7 @@ const Profile: React.FC = () => {
                 icon="mail"
                 placeholder="E-mail"
                 defaultValue={acs.email}
+                blurOnSubmit={true}
                 onSubmitEditing={() => passwordInputRef.current?.focus()}
               />
               <Input
@@ -182,6 +183,7 @@ const Profile: React.FC = () => {
                 name="password"
                 icon="lock"
                 placeholder="Senha atual"
+                blurOnSubmit={true}
                 onSubmitEditing={() => newPasswordInputRef.current?.focus()}
               />
 
@@ -192,6 +194,7 @@ const Profile: React.FC = () => {
                 name="newPassword"
                 icon="lock"
                 placeholder="Nova senha"
+                blurOnSubmit={true}
                 onSubmitEditing={() =>
                   newPasswordConfirmationInputRef.current?.focus()
                 }

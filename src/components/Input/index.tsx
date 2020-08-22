@@ -29,6 +29,9 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
 ) => {
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
+  const [color, setColor] = useState(
+    isFocused || isFilled ? '#21c8b7' : '#4f6268',
+  );
 
   const inputElementRef = useRef<any>(null);
   const { fieldName, registerField, error, defaultValue = '' } = useField(name);
@@ -70,11 +73,7 @@ const Input: React.RefForwardingComponent<InputRef, InputProps> = (
 
   return (
     <Container isFocused={isFocused} isErrored={!!error}>
-      <Icon
-        name={icon}
-        size={20}
-        color={isFocused || isFilled ? '#21c8b7' : '#4f6268'}
-      />
+      <Icon name={icon} size={20} color={!!error ? '#f53535' : color} />
       <TextInput
         ref={inputElementRef}
         keyboardAppearance="dark"
