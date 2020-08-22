@@ -32,6 +32,7 @@ interface AuthContextData {
   loading: boolean;
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut(): void;
+  updateAcs(acs: Acs): Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -85,8 +86,25 @@ export const AuthProvider: React.FC = ({ children }) => {
     setData({} as AuthState);
   }, []);
 
+  const updateAcs = useCallback(
+    async (acs: Acs) => {
+      setData({
+        token: data.token,
+        acs,
+      });
+
+      await Promise.all([
+        AsyncStorage.removeItem('@Community:acs'),
+        AsyncStorage.setItem('@Community:acs', JSON.stringify(acs)),
+      ]);
+    },
+
+    [data.token],
+  );
+
   return (
-    <AuthContext.Provider value={{ acs: data.acs, signIn, signOut, loading }}>
+    <AuthContext.Provider
+      value={{ acs: data.acs, signIn, signOut, updateAcs, loading }}>
       {children}
     </AuthContext.Provider>
   );

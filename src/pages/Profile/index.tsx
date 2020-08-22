@@ -32,7 +32,7 @@ interface ProfileFormData {
 }
 
 const Profile: React.FC = () => {
-  const { acs, signOut } = useAuth();
+  const { acs, updateAcs, signOut } = useAuth();
   const formRef = useRef<FormHandles>(null);
   const emailInputRef = useRef<TextInput>(null);
   const nameInputRef = useRef<TextInput>(null);
@@ -92,12 +92,14 @@ const Profile: React.FC = () => {
         };
 
         try {
-          const response = await api.put('/acs', formData);
-          console.log(response);
+          const { data } = await api.put('/acs', formData);
+          updateAcs(data);
+
+          console.log(JSON.parse(data));
 
           Alert.alert(
-            'Cadastro Realizado com Sucesso',
-            'Você já pode fazer logon na aplicação.',
+            'Alteração realizada com sucesso.',
+            'Seus dados estão atualizados.',
           );
         } catch (err) {
           Alert.alert('Alteração de dados falhou', err.message);
