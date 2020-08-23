@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import CreateIndividuals from '../pages/CreateIndividuals';
 import CreateFamilies from '../pages/CreateFamilies';
 import Create from '../pages/Create';
+import IndividualRoutes from './individual.routes';
 
 const CreateNavigator = createStackNavigator();
 
@@ -15,9 +16,8 @@ const CreateRoutes: React.FC = () => {
       }}>
       <CreateNavigator.Screen name="Create" component={Create} />
       <CreateNavigator.Screen
-        options={{ headerShown: true }}
         name="Cadastrar Indivíduo"
-        component={CreateIndividuals}
+        component={IndividualRoutes}
       />
       <CreateNavigator.Screen
         options={{ headerShown: true }}

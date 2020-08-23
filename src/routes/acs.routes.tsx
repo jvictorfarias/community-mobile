@@ -4,9 +4,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
 import Dashboard from '../pages/Dashboard';
-import Create from '../pages/Create';
 import Profile from '../pages/Profile';
 import CreateRoutes from './create.routes';
+import Search from '../pages/Search';
 
 const Acs = createBottomTabNavigator();
 
@@ -20,6 +20,8 @@ const AcsRoutes: React.FC = () => (
           iconName = 'align-justify';
         } else if (route.name === 'Adicionar') {
           iconName = 'plus-circle';
+        } else if (route.name === 'Buscar') {
+          iconName = 'search';
         } else {
           iconName = 'user';
         }
@@ -31,6 +33,7 @@ const AcsRoutes: React.FC = () => (
       inactiveTintColor: '#4f6268',
     }}>
     <Acs.Screen name="Estatísticas" component={Dashboard} />
+    <Acs.Screen name="Buscar" component={Search} />
     <Acs.Screen name="Adicionar" component={CreateRoutes} />
     <Acs.Screen name="Perfil" component={Profile} />
   </Acs.Navigator>

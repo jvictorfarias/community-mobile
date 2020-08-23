@@ -10,7 +10,6 @@ const Create: React.FC = () => {
   return (
     <>
       <Header />
-
       <ScrollView
         contentContainerStyle={{
           flex: 1,
