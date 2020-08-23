@@ -12,7 +12,7 @@ export const Block = styled(RectButton)`
   margin: auto;
   width: 300px;
   border-radius: 8px;
-  background: #fff;
+  background: #21c8b7;
   align-items: center;
   justify-content: center;
 `;
@@ -20,5 +20,5 @@ export const Block = styled(RectButton)`
 export const Title = styled.Text`
   font-weight: bold;
   font-size: 24px;
-  color: #21c8b7;
+  color: #fff;
 `;

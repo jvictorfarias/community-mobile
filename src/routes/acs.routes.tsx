@@ -6,6 +6,7 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 import Dashboard from '../pages/Dashboard';
 import Create from '../pages/Create';
 import Profile from '../pages/Profile';
+import CreateRoutes from './create.routes';
 
 const Acs = createBottomTabNavigator();
 
@@ -30,7 +31,7 @@ const AcsRoutes: React.FC = () => (
       inactiveTintColor: '#4f6268',
     }}>
     <Acs.Screen name="Estatísticas" component={Dashboard} />
-    <Acs.Screen name="Adicionar" component={Create} />
+    <Acs.Screen name="Adicionar" component={CreateRoutes} />
     <Acs.Screen name="Perfil" component={Profile} />
   </Acs.Navigator>
 );
