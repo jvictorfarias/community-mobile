@@ -21,8 +21,11 @@ const Create: React.FC = () => {
           <Block onPress={() => navigate('Cadastrar Indivíduo')}>
             <Title>Cadastrar Indivíduo</Title>
           </Block>
-          <Block enabled={false} style={{ opacity: 0.5 }}>
+          {/* <Block enabled={false} style={{ opacity: 0.5 }}>
             <Title>Cadastrar Posto</Title>
+          </Block> */}
+          <Block onPress={() => navigate('Detalhes do Indivíduo')}>
+            <Title>Detalhes do Indivíduo</Title>
           </Block>
         </Container>
       </ScrollView>

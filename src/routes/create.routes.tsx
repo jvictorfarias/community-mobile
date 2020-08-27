@@ -4,6 +4,8 @@ import CreateIndividuals from '../pages/CreateIndividuals';
 import CreateFamilies from '../pages/CreateFamilies';
 import Create from '../pages/Create';
 import IndividualRoutes from './individual.routes';
+import DetailIndividual from '../pages/DetailIndividual';
+import DetailIndividualMore from '../pages/DetailIndividualMore';
 
 const CreateNavigator = createStackNavigator();
 
@@ -23,6 +25,16 @@ const CreateRoutes: React.FC = () => {
         options={{ headerShown: true }}
         name="Cadastrar Família"
         component={CreateFamilies}
+      />
+      <CreateNavigator.Screen
+        options={{ headerShown: true }}
+        name="Detalhes do Indivíduo"
+        component={DetailIndividual}
+      />
+      <CreateNavigator.Screen
+        options={{ headerShown: true }}
+        name="Mais Detalhes"
+        component={DetailIndividualMore}
       />
     </CreateNavigator.Navigator>
   );
