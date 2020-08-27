@@ -10,13 +10,13 @@ export default StyleSheet.create({
 
   header: {
     alignItems: 'center',
+    marginBottom: 24
   },
 
   family: {
     padding: 24,
     borderRadius: 8,
     backgroundColor: '#FFF',
-    marginTop: 24,
     marginBottom: 16,
     borderWidth: 2,
     borderColor: '#4f6268',
