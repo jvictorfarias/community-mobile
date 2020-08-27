@@ -74,19 +74,19 @@ export const work = [
     value: 'Assalariado sem carteira de trabalho',
   },
   {
-    label: 'Autônomo com prevlabelência social',
-    value: 'Autônomo com prevlabelência social',
+    label: 'Autônomo com previdência social',
+    value: 'Autônomo com previdência social',
   },
   {
-    label: 'Autônomo sem prevlabelência social ',
-    value: 'Autônomo sem prevlabelência social ',
+    label: 'Autônomo sem previdência social ',
+    value: 'Autônomo sem previdência social ',
   },
   { label: 'Aposentado/Pensionista', value: 'Aposentado/Pensionista' },
   { label: 'Desempregado', value: 'Desempregado' },
   { label: 'Não trabalha', value: 'Não trabalha' },
   {
-    label: 'Servlabelor público/militar',
-    value: 'Servlabelor público/militar',
+    label: 'Servidor público/militar',
+    value: 'Servidor público/militar',
   },
   { label: 'Outro', value: 'Outro' },
 ];
