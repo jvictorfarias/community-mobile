@@ -83,8 +83,10 @@ const SignUp: React.FC = () => {
         style={{ flex: 1 }}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
         <ScrollView
-          keyboardShouldPersistTaps="handled"
-          contentContainerStyle={{ flex: 1 }}>
+          keyboardShouldPersistTaps="always"
+          contentContainerStyle={{
+            padding: 10,
+          }}>
           <Container>
             <Image
               source={logoImg}
