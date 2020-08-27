@@ -1,113 +1,125 @@
 export const education = [
-  { id: 'Creche ', name: 'Creche ' },
-  { id: 'Pré-escola (exceto CA)', name: 'Pré-escola (exceto CA)' },
+  { label: 'Creche ', value: 'Creche' },
+  { label: 'Pré-escola (exceto CA)', value: 'Pré-escola (exceto CA)' },
   {
-    id: ' Classe de Alfabetização - CA',
-    name: ' Classe de Alfabetização - CA',
+    label: ' Classe de Alfabetização - CA',
+    value: ' Classe de Alfabetização - CA',
   },
   {
-    id: 'Ensino Fundamental 1ª a 4ª séries',
-    name: 'Ensino Fundamental 1ª a 4ª séries',
+    label: 'Ensino Fundamental 1ª a 4ª séries',
+    value: 'Ensino Fundamental 1ª a 4ª séries',
   },
   {
-    id: ' Ensino Fundamental 5ª a 8ª séries',
-    name: ' Ensino Fundamental 5ª a 8ª séries',
-  },
-  { id: 'Ensino Fundamental Completo ', name: 'Ensino Fundamental Completo ' },
-  { id: 'Ensino Fundamental Especial', name: 'Ensino Fundamental Especial' },
-  {
-    id: 'Ensino Fundamental EJA - séries iniciais',
-    name: '(Supletivo 1ª a 4ª)',
+    label: ' Ensino Fundamental 5ª a 8ª séries',
+    value: ' Ensino Fundamental 5ª a 8ª séries',
   },
   {
-    id: 'Ensino Fundamental EJA - séries finais (Supletivo 5ª a 8ª)',
-    name: 'Slate',
+    label: 'Ensino Fundamental Completo ',
+    value: 'Ensino Fundamental Completo ',
   },
   {
-    id: 'Ensino Médio, Médio 2º Ciclo (Científico, Técnico etc.)',
-    name: 'Ensino Médio, Médio 2º Ciclo (Científico, Técnico etc.)',
-  },
-  { id: 'Ensino Médio Especial', name: 'Ensino Médio Especial' },
-  { id: 'Ensino Médio EJA (Supletivo)', name: 'Ensino Médio EJA (Supletivo)' },
-  {
-    id: 'Superior, Aperfeiçoamento, Especialização, Mestrado,',
-    name: 'Doutorado',
+    label: 'Ensino Fundamental Especial',
+    value: 'Ensino Fundamental Especial',
   },
   {
-    id: 'Alfabetização para Adultos (Mobral etc.) ',
-    name: 'Alfabetização para Adultos (Mobral etc.) ',
+    label: 'Ensino Fundamental EJA - Inicio',
+    value: '(Supletivo 1ª a 4ª)',
   },
-  { id: 'Nenhum', name: 'Nenhum' },
+  {
+    label: 'Ensino Fundamental EJA - 5ª a 8ª',
+    value: 'Slate',
+  },
+  {
+    label: 'Ensino Médio, Médio 2º Ciclo',
+    value: 'Ensino Médio, Médio 2º Ciclo',
+  },
+  { label: 'Ensino Médio Especial', value: 'Ensino Médio Especial' },
+  {
+    label: 'Ensino Médio EJA (Supletivo)',
+    value: 'Ensino Médio EJA (Supletivo)',
+  },
+  {
+    label: 'Superior, Aperfeiçoamento, \n Especialização, Mestrado,',
+    value: 'Doutorado',
+  },
+  {
+    label: 'Alfabetização para Adultos \n(Mobral etc.) ',
+    value: 'Alfabetização para Adultos \n(Mobral etc.) ',
+  },
+  { label: 'Nenhum', value: 'Nenhum' },
 ];
 
 export const color = [
-  { id: 'Branca', name: 'Branca' },
-  { id: 'Preta', name: 'Preta' },
-  { id: 'Parda', name: 'Parda' },
-  { id: 'Amarela', name: 'Amarela' },
-  { id: 'Indígena', name: 'Indígena' },
+  { label: 'Branca', value: 'Branca' },
+  { label: 'Preta', value: 'Preta' },
+  { label: 'Parda', value: 'Parda' },
+  { label: 'Amarela', value: 'Amarela' },
+  { label: 'Indígena', value: 'Indígena' },
 ];
 
 export const nationality = [
-  { id: 'Brasileira', name: 'Brasileira' },
-  { id: 'Naturalizado', name: 'Naturalizado' },
-  { id: 'Estrangeiro', name: 'Estrangeiro' },
+  { label: 'Brasileira', value: 'Brasileira' },
+  { label: 'Naturalizado', value: 'Naturalizado' },
+  { label: 'Estrangeiro', value: 'Estrangeiro' },
 ];
 
 export const work = [
-  { id: 'Empregador', name: 'Empregador' },
+  { label: 'Empregador', value: 'Empregador' },
   {
-    id: 'Assalariado com carteira de trabalho',
-    name: 'Assalariado com carteira de trabalho',
+    label: 'Assalariado com carteira de trabalho',
+    value: 'Assalariado com carteira de trabalho',
   },
   {
-    id: 'Assalariado sem carteira de trabalho ',
-    name: 'Assalariado sem carteira de trabalho',
+    label: 'Assalariado sem carteira de trabalho ',
+    value: 'Assalariado sem carteira de trabalho',
   },
   {
-    id: 'Autônomo com previdência social',
-    name: 'Autônomo com previdência social',
+    label: 'Autônomo com prevlabelência social',
+    value: 'Autônomo com prevlabelência social',
   },
   {
-    id: 'Autônomo sem previdência social ',
-    name: 'Autônomo sem previdência social ',
+    label: 'Autônomo sem prevlabelência social ',
+    value: 'Autônomo sem prevlabelência social ',
   },
-  { id: 'Aposentado/Pensionista', name: 'Aposentado/Pensionista' },
-  { id: 'Desempregado', name: 'Desempregado' },
-  { id: 'Não trabalha', name: 'Não trabalha' },
-  { id: 'Servidor público/militar', name: 'Servidor público/militar' },
-  { id: 'Outro', name: 'Outro' },
+  { label: 'Aposentado/Pensionista', value: 'Aposentado/Pensionista' },
+  { label: 'Desempregado', value: 'Desempregado' },
+  { label: 'Não trabalha', value: 'Não trabalha' },
+  {
+    label: 'Servlabelor público/militar',
+    value: 'Servlabelor público/militar',
+  },
+  { label: 'Outro', value: 'Outro' },
 ];
 
 export const deficient_fault = [
-  { id: 'Auditiva', name: 'Auditiva' },
-  { id: 'Visual', name: 'Visual' },
-  { id: 'Intelectual/Cognitiva', name: 'Intelectual/Cognitiva' },
-  { id: 'Física', name: 'Física' },
-  { id: 'Outra', name: 'Outra' },
+  { label: 'Auditiva', value: 'Auditiva' },
+  { label: 'Visual', value: 'Visual' },
+  { label: 'Intelectual/Cognitiva', value: 'Intelectual/Cognitiva' },
+  { label: 'Física', value: 'Física' },
+  { label: 'Outra', value: 'Outra' },
 ];
 
 export const imc = [
-  { id: 'Abaixo do Peso ', name: 'Abaixo do Peso ' },
-  { id: 'Peso Adequado ', name: 'Peso Adequado ' },
-  { id: 'Acima do Peso', name: 'Acima do Peso' },
+  { label: 'Abaixo do Peso ', value: 'Abaixo do Peso ' },
+  { label: 'Peso Adequado ', value: 'Peso Adequado ' },
+  { label: 'Acima do Peso', value: 'Acima do Peso' },
 ];
 
 export const heart_disease = [
-  { id: 'Insuficiência Cardíaca ', name: 'Insuficiência Cardíaca ' },
-  { id: 'Outra', name: 'Outra' },
-  { id: 'Não Sabe', name: 'Não Sabe' },
+  { label: 'Insuficiência Cardíaca ', value: 'Insuficiência Cardíaca ' },
+  { label: 'Outra', value: 'Outra' },
+  { label: 'Não Sabe', value: 'Não Sabe' },
 ];
 
 export const kidney_disease = [
-  { id: 'Insuficiência Renal ', name: 'Insuficiência Renal ' },
-  { id: 'Outro', name: 'Outro' },
-  { id: 'Não Sabe ', name: 'Não Sabe ' },
+  { label: 'Insuficiência Renal ', value: 'Insuficiência Renal ' },
+  { label: 'Outro', value: 'Outro' },
+  { label: 'Não Sabe ', value: 'Não Sabe ' },
 ];
 
 export const respiratory_disease = [
-  { id: 'Asma', name: 'Asma' },
-  { id: 'DPOC/Enfisema', name: 'DPOC/Enfisema' },
-  { id: 'Outro', name: 'Outro' },
-  { id: 'Não Sabe ', name: 'Não Sabe ' },
+  { label: 'Asma', value: 'Asma' },
+  { label: 'DPOC/Enfisema', value: 'DPOC/Enfisema' },
+  { label: 'Outro', value: 'Outro' },
+  { label: 'Não Sabe ', value: 'Não Sabe ' },
 ];

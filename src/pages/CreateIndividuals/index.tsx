@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useState, useEffect } from 'react';
 import {
   View,
   KeyboardAvoidingView,
@@ -8,20 +8,34 @@ import {
   Alert,
 } from 'react-native';
 
-import { Container, Title, FormHeader } from './styles';
+import { Container, Title, FormHeader, FieldContainer } from './styles';
 import { Form } from '@unform/mobile';
 import { FormHandles } from '@unform/core';
 import Icon from 'react-native-vector-icons/Feather';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import * as Yup from 'yup';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
 import getValidationErrors from '../../utils/getValidationErrors';
 import RadioButtonInput from '../../components/Radio';
+import { TextInputMask, TextInputMaskProps } from 'react-native-masked-text';
+import ExtendedRadio from '../../components/ExtendedRadio';
+import {
+  color,
+  nationality,
+  education,
+  work,
+  deficient_fault,
+  imc,
+  heart_disease,
+  kidney_disease,
+  respiratory_disease,
+} from '../../meta/data';
 
 interface IndividualFormData {
+  [x: string]: string | boolean;
   family_id: string;
   name: string;
   cns: string;
@@ -34,99 +48,76 @@ interface IndividualFormData {
   nationality: string;
   birth_country: string;
   birth_state: string;
-  is_school_frequency?: boolean;
+  is_school_frequency: boolean;
   education: string;
   work: string;
-  is_deficient?: boolean;
+  is_deficient: boolean;
   deficient_faulty: string;
-  is_pregnant?: boolean;
-  is_smoker?: boolean;
+  is_pregnant: boolean;
+  is_smoker: boolean;
   imc: string;
-  is_drug_addict?: boolean;
-  is_alcoholic?: boolean;
-  is_hypertensive?: boolean;
-  is_diabetic?: boolean;
-  is_stroke?: boolean;
-  is_infarct?: boolean;
-  is_heart_sick?: boolean;
+  is_drug_addict: boolean;
+  is_alcoholic: boolean;
+  is_hypertensive: boolean;
+  is_diabetic: boolean;
+  is_stroke: boolean;
+  is_infarct: boolean;
+  is_heart_sick: boolean;
   heart_disease: string;
-  is_kidney_sick?: boolean;
+  is_kidney_sick: boolean;
   kidney_disease: string;
-  is_respiratory_sick?: boolean;
+  is_respiratory_sick: boolean;
   respiratory_disease: string;
-  is_hanseniase?: boolean;
-  is_tuberculosis?: boolean;
-  is_cancer?: boolean;
-  is_hospitalization_last_12_months?: boolean;
+  is_hanseniase: boolean;
+  is_tuberculosis: boolean;
+  is_cancer: boolean;
+  is_hospitalization_last_12_months: boolean;
   hospitalization_cause: string;
-  is_mental_sick?: boolean;
-  is_bedridden?: boolean;
-  is_domicilied?: boolean;
-  is_homeless?: boolean;
+  is_mental_sick: boolean;
+  is_bedridden: boolean;
+  is_domicilied: boolean;
+  is_homeless: boolean;
 }
 
 const CreateFamilies: React.FC = () => {
+  const cpfRef = useRef();
+  const birthdayRef = useRef();
   const formRef = useRef<FormHandles>(null);
   const nameInputRef = useRef<TextInput>(null);
   const cnsInputRef = useRef<TextInput>(null);
-  const cpfInputRef = useRef<TextInput>(null);
-  const birthdayInputRef = useRef<any>(null);
-  const sexInputRef = useRef<TextInput>(null);
-  const colorInputRef = useRef<TextInput>(null);
+  const [cpf, setCpf] = useState<any>('');
+  const [birthday, setBirthday] = useState<any>('');
   const fatherInputRef = useRef<TextInput>(null);
   const motherInputRef = useRef<TextInput>(null);
-  const nationalityInputRef = useRef<any>(null);
   const birthCountryInputRef = useRef<TextInput>(null);
   const birthStateInputRef = useRef<TextInput>(null);
-  const isSchoolInputRef = useRef<any>(null);
-  const educationInputRef = useRef<any>(null);
-  const workInputRef = useRef<any>(null);
-  const isDeficientInputRef = useRef<any>(null);
-  const deficientFaultyInputRef = useRef<any>(null);
-  const isPregnantInputRef = useRef<any>(null);
-  const isSmokerInputRef = useRef<any>(null);
-  const imcInputRef = useRef<any>(null);
-  const isDrugAddictInputRef = useRef<any>(null);
-  const isAlcoholicInputRef = useRef<any>(null);
-  const isHypertensiveInputRef = useRef<any>(null);
-  const isDiabeticInputRef = useRef<any>(null);
-  const isStrokeInputRef = useRef<any>(null);
-  const isInfarctInputRef = useRef<any>(null);
-  const isHeartSickInputRef = useRef<any>(null);
-  const heartDiseaseInputRef = useRef<any>(null);
-  const isKidneySickInputRef = useRef<any>(null);
-  const kidneyDiseaseInputRef = useRef<any>(null);
-  const isRespiratorySickInputRef = useRef<any>(null);
-  const respiratoryDiseaseInputRef = useRef<any>(null);
-  const isHanseniaseInputRef = useRef<any>(null);
-  const isTuberculosisInputRef = useRef<any>(null);
-  const isCancerInputRef = useRef<any>(null);
-  const isHospitalizationInputRef = useRef<any>(null);
+  const [isDeficient, setIsDeficient] = useState<boolean>(false);
+  const [isHeartSick, setIsHeartSick] = useState<boolean>(false);
+  const [isKidneySick, setIsKidneySick] = useState<boolean>(false);
+  const [isRespiratorySick, setIsRespiratorySick] = useState<boolean>(false);
+  const [isHospitalization, setIsHospitalization] = useState<boolean>(false);
   const hospitalizationCauseInputRef = useRef<any>(null);
-  const isMentalSickInputRef = useRef<any>(null);
-  const isBdriddenInputRef = useRef<any>(null);
-  const isDomiciliedInputRef = useRef<any>(null);
-  const isHomelessInputRef = useRef<any>(null);
+
+  cpfRef.current = cpf;
+  birthdayRef.current = birthday;
 
   const navigation = useNavigation();
-  const { acs } = useAuth();
-
+  const route = useRoute();
   const handleIndividualCreation = useCallback(
     async (data: IndividualFormData) => {
       try {
         formRef.current?.setErrors({});
         const schema = Yup.object().shape({
           name: Yup.string().required('Nome da família obrigatório.'),
-          city: Yup.string().required('Cidade obrigatória.'),
-          district: Yup.string().required('Bairro obrigatório.'),
-          number: Yup.number().required('Número obrigatório.'),
-          phone: Yup.string().required('Telefone obrigatório.'),
-          state: Yup.string().required('Estado obrigatório'),
-          street: Yup.string().required('Rua obrigatória'),
-          zip: Yup.string().required('CEP obrigatório'),
+          cns: Yup.string().required('CNS obrigatório.'),
+          father_name: Yup.string(),
+          mother_name: Yup.string().required('Nome da mãe obrigatório'),
+          nationality: Yup.string().required('Nacionalidade obrigatória'),
+          birth_country: Yup.string().required(
+            'País de nascimento obrigatório',
+          ),
+          birth_state: Yup.string().required('Estado obrigatório'),
         });
-
-        console.log(data);
 
         await schema.validate(data, {
           abortEarly: false,
@@ -134,7 +125,9 @@ const CreateFamilies: React.FC = () => {
 
         const formData = {
           ...data,
-          acs_id: acs.id,
+          cpf: cpfRef.current,
+          birthday: birthdayRef.current,
+          family_id: route!.params!.family,
         };
 
         try {
@@ -144,8 +137,10 @@ const CreateFamilies: React.FC = () => {
             'Cadastro Realizado',
             'Indivíduo cadastradado com sucesso.',
           );
+          navigation.goBack();
         } catch (err) {
           Alert.alert('Cadastro Falhou', 'Tente novamente.');
+          console.log(err);
         }
 
         navigation.goBack();
@@ -173,15 +168,12 @@ const CreateFamilies: React.FC = () => {
             <Icon name="user" size={96} color="#21c8b7" />
             <Title>Cadastre o Indivíduo</Title>
           </FormHeader>
-          <Form ref={formRef} onSubmit={(data) => console.log(data)}>
+          <Form ref={formRef} onSubmit={handleIndividualCreation}>
             <Input
               ref={nameInputRef}
               name="name"
               autoCapitalize="words"
               placeholder="Nome"
-              onSubmitEditing={() => {
-                cnsInputRef.current?.focus();
-              }}
             />
 
             <Input
@@ -189,87 +181,178 @@ const CreateFamilies: React.FC = () => {
               name="cns"
               autoCapitalize="words"
               placeholder="CNS"
-              onSubmitEditing={() => {
-                cpfInputRef.current?.focus();
-              }}
             />
-            <Input
-              ref={cpfInputRef}
-              autoCapitalize="words"
-              name="cpf"
-              placeholder="CPF"
-              onSubmitEditing={() => {
-                birthdayInputRef.current?.focus();
-              }}
+            <FieldContainer>
+              <TextInputMask
+                style={{ flex: 1 }}
+                placeholder="CPF"
+                value={cpf}
+                type={'cpf'}
+                onChangeText={(value) => setCpf(value)}
+              />
+            </FieldContainer>
+            <FieldContainer>
+              <TextInputMask
+                style={{ flex: 1 }}
+                placeholder="Data de nascimento"
+                value={birthday}
+                type={'datetime'}
+                onChangeText={(text) => {
+                  setBirthday(text);
+                }}
+                options={{
+                  format: 'DD/MM/YYYY',
+                }}
+              />
+            </FieldContainer>
+            <ExtendedRadio
+              name="sex"
+              title="Sexo"
+              vertical={true}
+              options={[
+                { value: 'F', label: 'Feminino' },
+                { value: 'M', label: 'Masculino' },
+              ]}
             />
-            <Input
-              ref={birthdayInputRef}
-              name="birthday"
-              placeholder="Data de nascimento"
-              keyboardType="numeric"
+            <ExtendedRadio
+              name="color"
+              title="Cor"
+              vertical={true}
+              options={color}
             />
-            <Input ref={sexInputRef} name="sex" placeholder="Sexo" />
-            <Input ref={colorInputRef} name="color" placeholder="Cor" />
-
             <Input
               ref={fatherInputRef}
               name="father_name"
               placeholder="Nome do pai"
-              onSubmitEditing={() => motherInputRef.current?.focus()}
             />
 
             <Input
               ref={motherInputRef}
               name="mother_name"
               placeholder="Nome da mãe"
-              onSubmitEditing={() => formRef.current?.submitForm()}
             />
-            <Input
-              ref={nationalityInputRef}
+            <ExtendedRadio
               name="nationality"
-              placeholder="Nacionalidade"
+              title="Nacionalidade"
+              vertical={true}
+              options={nationality}
             />
             <Input
               ref={birthCountryInputRef}
               name="birth_country"
-              placeholder="Nome da mãe"
-              onSubmitEditing={() => formRef.current?.submitForm()}
+              placeholder="País de nascimento"
             />
             <Input
               ref={birthStateInputRef}
               name="birth_state"
               placeholder="Estado que nasceu"
-              onSubmitEditing={() => formRef.current?.submitForm()}
+            />
+            <RadioButtonInput name="is_school" label="Frequência escolar?" />
+            <ExtendedRadio
+              name="education"
+              title="Nível de educação"
+              vertical={true}
+              options={education}
+            />
+            <ExtendedRadio
+              name="work"
+              title="Trabalho"
+              vertical={true}
+              options={work}
             />
             <RadioButtonInput
-              //ref={isSchoolInputRef}
-              name="is_school"
-              label="Frequência escolar?"
+              name="is_deficient"
+              label="Possui deficiência?"
+              state={setIsDeficient}
             />
-            <Input
-              ref={educationInputRef}
-              name="education"
-              placeholder="Nível de educação"
-            />
-
-            <Input
-              ref={workInputRef}
-              name="work"
-              placeholder="Trabalho atual"
-            />
-            <RadioButtonInput name="is_deficient" label="Possui deficiência?" />
-            <Input
-              ref={deficientFaultyInputRef}
-              name="deficient_faulty"
-              placeholder="Indique a deficiência"
-            />
+            {isDeficient && (
+              <ExtendedRadio
+                name="deficient_faulty"
+                title="Indique a deficiência"
+                vertical={true}
+                options={deficient_fault}
+              />
+            )}
             <RadioButtonInput name="is_pregnant" label="Grávida?" />
             <RadioButtonInput name="is_smoker" label="Fumante?" />
-            <Input ref={imcInputRef} name="imc" placeholder="Estado de peso" />
+            <ExtendedRadio
+              name="imc"
+              title="Indique o estado de peso"
+              vertical={true}
+              options={imc}
+            />
             <RadioButtonInput name="is_drug_addict" label="Usa drogas?" />
             <RadioButtonInput name="is_alcoholic" label="Usa álcool?" />
             <RadioButtonInput name="is_hypertensive" label="Hipertenso?" />
+            <RadioButtonInput name="is_diabetic" label="Diabetico?" />
+            <RadioButtonInput name="is_stroke" label="AVC?" />
+            <RadioButtonInput name="is_infarct" label="Já teve infarto?" />
+            <RadioButtonInput
+              name="is_heart_sick"
+              state={setIsHeartSick}
+              label="Doença no coração?"
+            />
+            {isHeartSick && (
+              <ExtendedRadio
+                name="heart_disease"
+                title="Qual a doença do coração?"
+                vertical={true}
+                options={heart_disease}
+              />
+            )}
+            <RadioButtonInput
+              name="is_kidney_sick"
+              state={setIsKidneySick}
+              label="Doença no rim?"
+            />
+            {isKidneySick && (
+              <ExtendedRadio
+                name="kidney_disease"
+                title="Qual a doença no rim?"
+                vertical={true}
+                options={kidney_disease}
+              />
+            )}
+            <RadioButtonInput
+              name="is_respiratory_sick"
+              label="Doença respiratória?"
+              state={setIsRespiratorySick}
+            />
+            {isRespiratorySick && (
+              <ExtendedRadio
+                name="respiratory_disease"
+                title="Qual a doença respiratória?"
+                vertical={true}
+                options={respiratory_disease}
+              />
+            )}
 
+            <RadioButtonInput name="is_hanseniase" label="Possui hanseníase?" />
+            <RadioButtonInput
+              name="is_tuberculosis"
+              label="Possui tuberculose?"
+            />
+            <RadioButtonInput name="is_cancer" label="Possui câncer?" />
+            <RadioButtonInput
+              name="is_hospitalization_last_12_months"
+              label="Hospitalizado no último ano?"
+              state={setIsHospitalization}
+            />
+            {isHospitalization && (
+              <Input
+                ref={hospitalizationCauseInputRef}
+                name="hospitalization_cause"
+                placeholder="Qual a causa?"
+              />
+            )}
+
+            <RadioButtonInput
+              name="is_mental_sick"
+              label="Possui doença mental?"
+            />
+            <RadioButtonInput name="is_bedridden" label="Acamado?" />
+            <RadioButtonInput name="is_domicilied" label="Domiciliado?" />
+            <RadioButtonInput name="is_homeless" label="Sem teto?" />
             <Button onPress={() => formRef.current?.submitForm()}>
               Cadastrar
             </Button>

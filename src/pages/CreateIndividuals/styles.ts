@@ -1,4 +1,4 @@
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 
 export const Container = styled.View`
   flex: 1;
@@ -23,4 +23,26 @@ export const Avatar = styled.Image`
 export const FormHeader = styled.View`
   align-items: center;
   justify-content: center;
+`;
+
+interface ContainerProps {
+  isErrored?: boolean;
+}
+
+export const FieldContainer = styled.View<ContainerProps>`
+  min-width: 100%;
+  height: 60px;
+  padding: 0 16px;
+  background: #fff;
+  border-radius: 10px;
+  margin-bottom: 8px;
+  border-width: 2px;
+  border-color: #4f6268;
+  flex-direction: row;
+  align-items: center;
+  ${(props) =>
+    props.isErrored &&
+    css`
+      border-color: #c53030;
+    `}
 `;

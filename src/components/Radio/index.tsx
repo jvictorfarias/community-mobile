@@ -1,5 +1,10 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import React, {
+  useRef,
+  useEffect,
+  useState,
+  Dispatch,
+  SetStateAction,
+} from 'react';
 import { RadioButton } from 'react-native-paper';
 import { useField } from '@unform/core';
 
@@ -14,15 +19,21 @@ import {
 interface RadioProps {
   name: string;
   label: string;
+  state?: Dispatch<SetStateAction<boolean>>;
 }
 
-const RadioButtonInput: React.FC<RadioProps> = ({ name, label, ...rest }) => {
+const RadioButtonInput: React.FC<RadioProps> = ({
+  name,
+  state,
+  label,
+  ...rest
+}) => {
   const inputRef = useRef<any>(null);
   const { fieldName, registerField, defaultValue = 'false', error } = useField(
     name,
   );
 
-  const [value, setValue] = useState<any>(defaultValue);
+  const [value, setValue] = useState<string>(defaultValue);
   useEffect(() => {
     registerField({
       name: fieldName,
@@ -35,7 +46,13 @@ const RadioButtonInput: React.FC<RadioProps> = ({ name, label, ...rest }) => {
     <Container isErrored={!!error}>
       <RadioButton.Group
         ref={inputRef}
-        onValueChange={(value) => setValue(value)}
+        onValueChange={(newValue) => {
+          setValue(newValue);
+          if (state) {
+            const val = newValue === 'true' ? true : false;
+            state(val);
+          }
+        }}
         value={value}>
         <TitleQuestion>{label}</TitleQuestion>
         <RadioButtonGroups>
