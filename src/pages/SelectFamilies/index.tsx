@@ -28,7 +28,7 @@ const SelectFamilies: React.FC = () => {
   return (
     <Container>
       <FamiliesList
-        data={families}
+        data={families.sort((a, b) => a.name > b.name)}
         keyExtractor={(family) => family.id}
         ListHeaderComponent={
           <FamiliesListTitle>Selecione uma família</FamiliesListTitle>

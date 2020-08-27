@@ -32,7 +32,7 @@ const AcsRoutes: React.FC = () => (
       activeTintColor: '#21c8b7',
       inactiveTintColor: '#4f6268',
     }}>
-    <Acs.Screen name="Estatísticas" component={Dashboard} />
+    {/*<Acs.Screen name="Estatísticas" component={Dashboard} /> */}
     <Acs.Screen name="Buscar" component={SearchRoutes} />
     <Acs.Screen name="Adicionar" component={CreateRoutes} />
     <Acs.Screen name="Perfil" component={Profile} />

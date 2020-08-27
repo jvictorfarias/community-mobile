@@ -15,7 +15,7 @@ const Search: React.FC = () => {
           flex: 1,
         }}>
         <Container>
-          <Block onPress={() => navigate('Cadastrar Família')}>
+          <Block onPress={() => navigate('Procurar Famílias')}>
             <Title>Procurar Família</Title>
           </Block>
           <Block onPress={() => navigate('Procurar Indivíduo')}>

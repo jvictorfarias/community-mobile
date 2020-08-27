@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import Search from '../pages/Search';
-import SearchFamilies from '../pages/SearchFamilies';
+import SearchFamilyRoutes from './search.families.routes';
 import SearchIndividualRoutes from './search.individuals.routes';
 
 const SearchNavigator = createStackNavigator();
@@ -17,6 +17,10 @@ const SearchRoutes: React.FC = () => {
       <SearchNavigator.Screen
         name="Procurar Indivíduo"
         component={SearchIndividualRoutes}
+      />
+      <SearchNavigator.Screen
+        name="Procurar Famílias"
+        component={SearchFamilyRoutes}
       />
     </SearchNavigator.Navigator>
   );

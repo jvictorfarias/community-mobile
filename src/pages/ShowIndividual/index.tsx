@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useRoute } from '@react-navigation/native';
-import { View, Linking, Text, TouchableOpacity } from 'react-native';
+import React, { useEffect, useState, useCallback } from 'react';
+import { useRoute, useNavigation } from '@react-navigation/native';
+import { View, Linking, Text, TouchableOpacity, Alert } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Feather';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -52,10 +52,12 @@ interface Individual {
 
 import styles from './styles';
 import api from '../../services/api';
+import { DeleteButton, DeleteText } from './styled';
 const ShowIndividual: React.FC = () => {
   const [individual, setIndividual] = useState<Individual>({} as Individual);
   const route = useRoute();
   const individualID = route?.params.individual;
+  const navigation = useNavigation();
 
   useEffect(() => {
     api.get(`/individuals/${individualID}`).then(({ data }) => {
@@ -64,6 +66,12 @@ const ShowIndividual: React.FC = () => {
   }, []);
 
   const message = 'COMUNICADO DO ACS:';
+
+  const deleteIndividual = useCallback((id) => {
+    api.delete(`/individuals/${id}`);
+    Alert.alert('Indivíduo Deletado', 'O indivíduo foi deletado com sucesso');
+    navigation.navigate('Procurar');
+  }, []);
 
   function makeCall() {
     Linking.openURL(`tel://+55${individual.phone}`);
@@ -123,7 +131,7 @@ const ShowIndividual: React.FC = () => {
           FREQUENTA ESCOLA OU CRECHE
         </Text>
         <Text style={styles.individualValue}>
-          {individual.is_school_frequency}
+          {individual.is_school_frequency ? 'Sim' : 'Não'}
         </Text>
 
         <Text style={styles.individualProperty}>
@@ -137,108 +145,161 @@ const ShowIndividual: React.FC = () => {
         <Text style={styles.individualValue}>{individual.work}</Text>
 
         <Text style={styles.individualProperty}>TEM ALGUMA DEFICIÊNCIA</Text>
-        <Text style={styles.individualValue}>{individual.is_deficient}</Text>
-
-        <Text style={styles.individualProperty}>QUAL(is)</Text>
         <Text style={styles.individualValue}>
-          {individual.deficient_faulty}
+          {individual.is_deficient ? 'Sim' : 'Não'}
         </Text>
 
+        {individual.is_deficient && (
+          <>
+            <Text style={styles.individualProperty}>QUAL(is)</Text>
+            <Text style={styles.individualValue}>
+              {individual.deficient_faulty}
+            </Text>
+          </>
+        )}
+
         <Text style={styles.individualProperty}>ESTÁ GESTANTE</Text>
-        <Text style={styles.individualValue}>{individual.is_pregnant}</Text>
+        <Text style={styles.individualValue}>
+          {individual.is_pregnant ? 'Sim' : 'Não'}
+        </Text>
 
         <Text style={styles.individualProperty}>
           SOBRE O PESO, CONSIDERA-SE
         </Text>
         <Text style={styles.individualValue}>{individual.imc}</Text>
 
-        <Text style={styles.individualProperty}>ESTÁ FUMANTE</Text>
-        <Text style={styles.individualValue}>{individual.is_smoker}</Text>
+        <Text style={styles.individualProperty}>É FUMANTE</Text>
+        <Text style={styles.individualValue}>
+          {individual.is_smoker ? 'Sim' : 'Não'}
+        </Text>
 
         <Text style={styles.individualProperty}>FAZ USO DE ÁLCOOL</Text>
-        <Text style={styles.individualValue}>{individual.is_alcoholic}</Text>
+        <Text style={styles.individualValue}>
+          {individual.is_alcoholic ? 'Sim' : 'Não'}
+        </Text>
 
         <Text style={styles.individualProperty}>FAZ USO DE OUTRAS DROGAS</Text>
-        <Text style={styles.individualValue}>{individual.is_drug_addict}</Text>
+        <Text style={styles.individualValue}>
+          {individual.is_drug_addict ? 'Sim' : 'Não'}
+        </Text>
 
         <Text style={styles.individualProperty}>TEM HIPERTENSÃO ARTERIAL</Text>
-        <Text style={styles.individualValue}>{individual.is_hypertensive}</Text>
+        <Text style={styles.individualValue}>
+          {individual.is_hypertensive ? 'Sim' : 'Não'}
+        </Text>
 
         <Text style={styles.individualProperty}>TEM DIABETES</Text>
-        <Text style={styles.individualValue}>{individual.is_diabetic}</Text>
+        <Text style={styles.individualValue}>
+          {individual.is_diabetic ? 'Sim' : 'Não'}
+        </Text>
 
         <Text style={styles.individualProperty}>TEVE AVC/DERRAME</Text>
-        <Text style={styles.individualValue}>{individual.is_stroke}</Text>
+        <Text style={styles.individualValue}>
+          {individual.is_stroke ? 'Sim' : 'Não'}
+        </Text>
 
         <Text style={styles.individualProperty}>TEVE INFARTO</Text>
-        <Text style={styles.individualValue}>{individual.is_infarct}</Text>
+        <Text style={styles.individualValue}>
+          {individual.is_infarct ? 'Sim' : 'Não'}
+        </Text>
 
         <Text style={styles.individualProperty}>
           TEM DOENÇA CARDÍACA/DO CORAÇÃO
         </Text>
-        <Text style={styles.individualValue}>{individual.is_heart_sick}</Text>
+        <Text style={styles.individualValue}>
+          {individual.is_heart_sick ? 'Sim' : 'Não'}
+        </Text>
 
-        <Text style={styles.individualProperty}>QUAL(IS)</Text>
-        <Text style={styles.individualValue}>{individual.heart_disease}</Text>
-
+        {individual.is_heart_sick && (
+          <>
+            <Text style={styles.individualProperty}>QUAL(IS)</Text>
+            <Text style={styles.individualValue}>
+              {individual.heart_disease}
+            </Text>
+          </>
+        )}
         <Text style={styles.individualProperty}>
           TEM OU TEVE PROBLEMAS NOS RINS
         </Text>
-        <Text style={styles.individualValue}>{individual.is_kidney_sick}</Text>
-
-        <Text style={styles.individualProperty}>QUAL(IS)</Text>
-        <Text style={styles.individualValue}>{individual.kidney_disease}</Text>
+        <Text style={styles.individualValue}>
+          {individual.is_kidney_sick ? 'Sim' : 'Não'}
+        </Text>
+        {individual.is_kidney_sick && (
+          <>
+            <Text style={styles.individualProperty}>QUAL(IS)</Text>
+            <Text style={styles.individualValue}>
+              {individual.kidney_disease}
+            </Text>
+          </>
+        )}
 
         <Text style={styles.individualProperty}>
           TEM DOENÇA RESPIRATÓRIA/NO PULMÃO
         </Text>
         <Text style={styles.individualValue}>
-          {individual.is_respiratory_sick}
+          {individual.is_respiratory_sick ? 'Sim' : 'Não'}
         </Text>
 
-        <Text style={styles.individualProperty}>QUAL(IS)</Text>
-        <Text style={styles.individualValue}>
-          {individual.respiratory_disease}
-        </Text>
+        {individual.is_respiratory_sick && (
+          <>
+            <Text style={styles.individualProperty}>QUAL(IS)</Text>
+            <Text style={styles.individualValue}>
+              {individual.respiratory_disease}
+            </Text>
+          </>
+        )}
 
         <Text style={styles.individualProperty}>ESTÁ COM HANSENÍASE</Text>
-        <Text style={styles.individualValue}>{individual.is_hanseniase}</Text>
+        <Text style={styles.individualValue}>
+          {individual.is_hanseniase ? 'Sim' : 'Não'}
+        </Text>
 
         <Text style={styles.individualProperty}>ESTÁ COM TUBERCULOSE</Text>
-        <Text style={styles.individualValue}>{individual.is_tuberculosis}</Text>
+        <Text style={styles.individualValue}>
+          {individual.is_tuberculosis ? 'Sim' : 'Não'}
+        </Text>
 
         <Text style={styles.individualProperty}>TEM OU TEVE CÂNCER</Text>
-        <Text style={styles.individualValue}>{individual.is_cancer}</Text>
+        <Text style={styles.individualValue}>
+          {individual.is_cancer ? 'Sim' : 'Não'}
+        </Text>
 
         <Text style={styles.individualProperty}>
           TEVE ALGUMA INTERNAÇÃO NOS ÚLTIMOS 12 MESES
         </Text>
         <Text style={styles.individualValue}>
-          {individual.is_hospitalization_last_12_months}
+          {individual.is_hospitalization_last_12_months ? 'Sim' : 'Não'}
         </Text>
 
-        <Text style={styles.individualProperty}>POR QUAL CAUSA</Text>
-        <Text style={styles.individualValue}>
-          {individual.hospitalization_cause}
-        </Text>
+        {individual.is_hospitalization_last_12_months && (
+          <>
+            <Text style={styles.individualProperty}>POR QUAL CAUSA</Text>
+            <Text style={styles.individualValue}>
+              {individual.hospitalization_cause}
+            </Text>
+          </>
+        )}
 
         <Text style={styles.individualProperty}>
           Algum problema de saúde mental por profissional de saúde
         </Text>
-        <Text style={styles.individualValue}>{individual.is_mental_sick}</Text>
+        <Text style={styles.individualValue}>
+          {individual.is_mental_sick ? 'Sim' : 'Não'}
+        </Text>
 
         <Text style={styles.individualProperty}>ESTÁ ACAMADO</Text>
-        <Text style={styles.individualValue}>{individual.is_bedridden}</Text>
+        <Text style={styles.individualValue}>
+          {individual.is_bedridden ? 'Sim' : 'Não'}
+        </Text>
 
         <Text style={styles.individualProperty}>ESTÁ DOMICILIADO</Text>
-        <Text style={styles.individualValue}>{individual.is_domicilied}</Text>
+        <Text style={styles.individualValue}>
+          {individual.is_domicilied ? 'Sim' : 'Não'}
+        </Text>
 
         <Text style={styles.individualProperty}>ESTÁ EM SITUAÇÃO DE RUA</Text>
-        <Text style={styles.individualValue}>{individual.is_homeless}</Text>
-
-        <Text style={styles.individualProperty}>CONDIÇÃO DE SAÚDE</Text>
         <Text style={styles.individualValue}>
-          {individual.health_condition}
+          {individual.is_homeless ? 'Sim' : 'Não'}
         </Text>
       </View>
 
@@ -267,6 +328,9 @@ const ShowIndividual: React.FC = () => {
           </TouchableOpacity>
         </View>
       </View>
+      <DeleteButton onPress={() => deleteIndividual(individual.id)}>
+        <DeleteText>Deletar Indivíduo</DeleteText>
+      </DeleteButton>
     </ScrollView>
   );
 };

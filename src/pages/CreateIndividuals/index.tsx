@@ -82,11 +82,13 @@ interface IndividualFormData {
 const CreateFamilies: React.FC = () => {
   const cpfRef = useRef();
   const birthdayRef = useRef();
+  const phoneRef = useRef();
   const formRef = useRef<FormHandles>(null);
   const nameInputRef = useRef<TextInput>(null);
   const cnsInputRef = useRef<TextInput>(null);
   const [cpf, setCpf] = useState<any>('');
   const [birthday, setBirthday] = useState<any>('');
+  const [phone, setPhone] = useState<any>('');
   const fatherInputRef = useRef<TextInput>(null);
   const motherInputRef = useRef<TextInput>(null);
   const birthCountryInputRef = useRef<TextInput>(null);
@@ -100,6 +102,7 @@ const CreateFamilies: React.FC = () => {
 
   cpfRef.current = cpf;
   birthdayRef.current = birthday;
+  phoneRef.current = phone;
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -127,6 +130,7 @@ const CreateFamilies: React.FC = () => {
           ...data,
           cpf: cpfRef.current,
           birthday: birthdayRef.current,
+          phone: phoneRef.current,
           family_id: route!.params!.family,
         };
 
@@ -203,6 +207,20 @@ const CreateFamilies: React.FC = () => {
                 options={{
                   format: 'DD/MM/YYYY',
                 }}
+              />
+            </FieldContainer>
+            <FieldContainer>
+              <TextInputMask
+                style={{ flex: 1 }}
+                placeholder="Telefone"
+                value={phone}
+                type={'cel-phone'}
+                options={{
+                  maskType: 'BRL',
+                  withDDD: true,
+                  dddMask: '(99) ',
+                }}
+                onChangeText={(value) => setPhone(value)}
               />
             </FieldContainer>
             <ExtendedRadio
