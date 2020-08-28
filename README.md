@@ -75,7 +75,9 @@ $ cd community-mobile
 
 ```sh
 $ cd src
-# Usand o inicie a aplicação com o script a seguir e baixa o aplicativo "Expo"
+# Tenha certeza que possui o NodeJS e Yarn instalados
+$ yarn install
+# Usando o comando inicie a aplicação com o script a seguir e baixa o aplicativo "Expo"
 # na play store para rodar ele em ambiente de desenvolvimento
 $ yarn start
 ```
