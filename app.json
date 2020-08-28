@@ -22,7 +22,7 @@
     },
     "android": {
       "package": "com.victor.community",
-      "versionCode": 2
+      "versionCode": 4
     }
   }
 }
