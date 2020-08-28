@@ -25,7 +25,7 @@ Aplicação para gerenciar famílias e indivíduos de comunidades, auxiliando o 
 ## :fire: Prévia da Aplicação
 
 <div align="center"> 
-<img src="https://github.com/jvictorfarias/community-mobile/.github/unnamed.webp" alt="preview"/>
+<img src="https://github.com/jvictorfarias/community-mobile/blob/master/.github/unnamed.webp" alt="preview"/>
 </div>
 
 
@@ -33,14 +33,14 @@ Aplicação para gerenciar famílias e indivíduos de comunidades, auxiliando o 
 
 O projeto foi feito com as seguintes tecnologias:
 
-- [NodeJS](https://nodejs.org/en/)
-- [ExpressJS](https://expressjs.com/pt-br/)
-- [JWT](https://jwt.io/)
+- [ReactNative](https://nodejs.org/en/)
+- [Typescript]()
+- [Unform]()
   {...}
 
 ## :hammer: Deploy da Aplicação
 
-[Heroku](https://cryptic-brook-95865.herokuapp.com/)
+[Play Store](https://play.google.com/store/apps/details?id=com.victor.community)
 
 ## :thinking: Como Contribuir?
 
@@ -71,21 +71,14 @@ $ git clone https://github.com/jvictorfarias/community-mobile.git
 $ cd community-mobile
 ```
 
-#### Iniciando a API
+#### Iniciando o app com o EXPO
 
 ```sh
 $ cd src
-
-# Criando a imagem Docker do banco de dados:
-# Dentro do projeto, já existe uma arquivo docker-compose.yml que possui o
-# PostgreSQL como banco de dados, basta ter o Docker instalado em sua máquina.
-$ docker-compose up -d # Iniciará em background e não irá bloquear o shell
-
-# Rodando as migrations para o banco de dados e iniciando o projeto
-$ yarn && yarn typeorm migration:run && yarn dev:server
+# Usand o inicie a aplicação com o script a seguir e baixa o aplicativo "Expo"
+# na play store para rodar ele em ambiente de desenvolvimento
+$ yarn start
 ```
-
-[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=community-mobile&uri=https%3A%2F%2Fdrive.google.com%2Ffile%2Fd%2F1XuDjZbQt1hsVtRQ5fA-xMnnmJaMqIKhw%2Fview%3Fusp%3Dsharing)
 
 ### :memo: Licença
 
