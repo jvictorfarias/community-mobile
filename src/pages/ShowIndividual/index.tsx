@@ -281,7 +281,7 @@ const ShowIndividual: React.FC = () => {
         )}
 
         <Text style={styles.individualProperty}>
-          Algum problema de saúde mental por profissional de saúde
+          ALGUM PROBLEMA DE SAÚDE MENTAL DIAGNOSTICADO POR PROFISSIONAL DE SAÚDE
         </Text>
         <Text style={styles.individualValue}>
           {individual.is_mental_sick ? 'Sim' : 'Não'}
@@ -303,7 +303,7 @@ const ShowIndividual: React.FC = () => {
         </Text>
       </View>
 
-      <View style={styles.contactBox}>
+      {/* <View style={styles.contactBox}>
         <Text style={styles.contactTitle}>Entre em contato</Text>
 
         <View style={styles.actions}>
@@ -327,7 +327,7 @@ const ShowIndividual: React.FC = () => {
             />
           </TouchableOpacity>
         </View>
-      </View>
+      </View> */}
       <DeleteButton onPress={() => deleteIndividual(individual.id)}>
         <DeleteText>Deletar Indivíduo</DeleteText>
       </DeleteButton>
